@@ -1,0 +1,23 @@
+# FastAPI Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-dotenv==1.0.0
+
+# Pydantic for data validation
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# NumPy - forzar versión compatible con ChromaDB
+numpy<2.0.0
+
+# ChromaDB for vector storage (última versión)
+chromadb==1.3.0
+
+# Embeddings - versiones compatibles
+sentence-transformers>=2.2.0
+transformers>=4.34.0
+torch>=2.0.0
+
+# Additional utilities
+python-multipart==0.0.6
+httpx==0.27.0

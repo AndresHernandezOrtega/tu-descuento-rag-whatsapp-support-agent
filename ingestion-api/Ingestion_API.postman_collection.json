@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "Ingestion API - RAG Support Agent",
+		"description": "Colección de Postman para probar los endpoints de la API de Ingesta de Documentos en ChromaDB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12345678"
+	},
+	"item": [
+		{
+			"name": "Health & Status",
+			"item": [
+				{
+					"name": "Root - Welcome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Endpoint raíz que muestra información de bienvenida de la API"
+					},
+					"response": []
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Verifica el estado de salud de la API"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para verificar el estado de la API"
+		},
+		{
+			"name": "Document Management",
+			"item": [
+				{
+					"name": "Ingest Document - Manual Usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Manual de Usuario - TuDescuento\",\n    \"content\": \"Bienvenido a TuDescuento. Este es el manual de usuario completo de nuestra plataforma.\\n\\nCapítulo 1: Registro\\nPara registrarte en TuDescuento, sigue estos pasos:\\n1. Ingresa a www.tudescuento.com\\n2. Haz clic en el botón 'Registrarse'\\n3. Completa el formulario con tus datos personales\\n4. Verifica tu correo electrónico\\n5. ¡Listo! Ya puedes comenzar a usar la plataforma.\\n\\nCapítulo 2: Cómo buscar descuentos\\nPuedes buscar descuentos de varias formas:\\n- Por categoría: Ropa, Tecnología, Alimentos, etc.\\n- Por tienda: Busca tus tiendas favoritas\\n- Por producto: Busca productos específicos\\n\\nCapítulo 3: Cómo activar un descuento\\nPara activar un descuento:\\n1. Selecciona el descuento que te interese\\n2. Haz clic en 'Activar descuento'\\n3. Sigue las instrucciones específicas de cada tienda\\n4. Disfruta de tu ahorro\\n\\nCapítulo 4: Soporte\\nSi tienes problemas, puedes contactarnos por:\\n- WhatsApp: +1234567890\\n- Email: soporte@tudescuento.com\\n- Chat en vivo disponible 24/7\",\n    \"source\": \"manual_usuario_v1.pdf\",\n    \"metadata\": {\n        \"author\": \"TuDescuento Team\",\n        \"category\": \"soporte\",\n        \"version\": \"1.0\",\n        \"date\": \"2025-10-25\",\n        \"language\": \"es\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/ingest",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ingest"
+							]
+						},
+						"description": "Ingesta un documento completo (Manual de Usuario) en la base de datos ChromaDB. El documento se divide en chunks, vectoriza y almacena."
+					},
+					"response": []
+				},
+				{
+					"name": "Ingest Document - FAQ",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Preguntas Frecuentes - TuDescuento\",\n    \"content\": \"FAQ - Preguntas Frecuentes\\n\\n¿Qué es TuDescuento?\\nTuDescuento es una plataforma que reúne los mejores descuentos y ofertas de múltiples tiendas en un solo lugar.\\n\\n¿Es gratis usar TuDescuento?\\nSí, TuDescuento es completamente gratuito para todos los usuarios. No cobramos comisiones ni cargos ocultos.\\n\\n¿Cómo gana dinero TuDescuento?\\nNos asociamos con las tiendas y recibimos una comisión cuando realizas una compra a través de nuestros enlaces.\\n\\n¿Los descuentos son reales?\\nSí, todos nuestros descuentos son verificados y actualizados constantemente. Trabajamos directamente con las tiendas asociadas.\\n\\n¿Puedo usar TuDescuento en mi celular?\\nSí, TuDescuento está disponible como aplicación móvil para iOS y Android, además de nuestra versión web.\\n\\n¿Cómo cancelo mi cuenta?\\nPuedes cancelar tu cuenta en cualquier momento desde la configuración de tu perfil o contactando a soporte.\\n\\n¿Qué hago si un descuento no funciona?\\nSi un descuento no funciona, por favor repórtalo inmediatamente a través de nuestro chat de soporte para que podamos verificarlo.\\n\\n¿Puedo compartir descuentos con amigos?\\nSí, puedes compartir cualquier descuento a través de WhatsApp, email o redes sociales directamente desde la plataforma.\\n\\n¿Con qué frecuencia se actualizan los descuentos?\\nNuestros descuentos se actualizan diariamente. Algunos descuentos pueden cambiar o expirar según las políticas de cada tienda.\",\n    \"source\": \"faq_tudescuento.txt\",\n    \"metadata\": {\n        \"author\": \"Support Team\",\n        \"category\": \"faq\",\n        \"version\": \"2.1\",\n        \"date\": \"2025-10-25\",\n        \"language\": \"es\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/ingest",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ingest"
+							]
+						},
+						"description": "Ingesta documento de preguntas frecuentes en la base de datos"
+					},
+					"response": []
+				},
+				{
+					"name": "Ingest Document - Políticas",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Políticas de Privacidad y Términos de Uso\",\n    \"content\": \"POLÍTICAS DE PRIVACIDAD Y TÉRMINOS DE USO - TUDESCUENTO\\n\\nÚltima actualización: 25 de Octubre de 2025\\n\\n1. INFORMACIÓN QUE RECOPILAMOS\\nRecopilamos información personal como nombre, email, número de teléfono y preferencias de compra cuando te registras en nuestra plataforma.\\n\\n2. USO DE LA INFORMACIÓN\\nUtilizamos tu información para:\\n- Proporcionarte descuentos personalizados\\n- Mejorar nuestros servicios\\n- Enviarte notificaciones de nuevas ofertas\\n- Procesar tus solicitudes de soporte\\n\\n3. PROTECCIÓN DE DATOS\\nImplementamos medidas de seguridad para proteger tu información personal. Todos los datos están encriptados y almacenados de forma segura.\\n\\n4. COMPARTIR INFORMACIÓN\\nNo vendemos ni compartimos tu información personal con terceros sin tu consentimiento explícito, excepto cuando sea requerido por ley.\\n\\n5. COOKIES\\nUtilizamos cookies para mejorar tu experiencia de usuario. Puedes desactivar las cookies en la configuración de tu navegador.\\n\\n6. DERECHOS DEL USUARIO\\nTienes derecho a:\\n- Acceder a tu información personal\\n- Corregir datos incorrectos\\n- Solicitar la eliminación de tu cuenta\\n- Exportar tus datos\\n\\n7. CAMBIOS EN LAS POLÍTICAS\\nNos reservamos el derecho de modificar estas políticas. Te notificaremos de cualquier cambio importante.\\n\\n8. CONTACTO\\nPara preguntas sobre privacidad, contacta a: privacidad@tudescuento.com\",\n    \"source\": \"politicas_privacidad_v3.pdf\",\n    \"metadata\": {\n        \"author\": \"Legal Team\",\n        \"category\": \"legal\",\n        \"version\": \"3.0\",\n        \"date\": \"2025-10-25\",\n        \"language\": \"es\",\n        \"important\": true\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/ingest",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ingest"
+							]
+						},
+						"description": "Ingesta documento de políticas de privacidad y términos de uso"
+					},
+					"response": []
+				},
+				{
+					"name": "List All Documents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/documents",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"documents"
+							]
+						},
+						"description": "Obtiene la lista de todos los documentos almacenados en ChromaDB con información sobre el número de chunks de cada uno"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Document by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/delete/{{document_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"delete",
+								"{{document_id}}"
+							]
+						},
+						"description": "Elimina un documento específico de ChromaDB usando su ID. Debes obtener el ID primero usando el endpoint 'List All Documents'"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para gestionar documentos: ingesta, listado y eliminación"
+		},
+		{
+			"name": "API Documentation",
+			"item": [
+				{
+					"name": "OpenAPI Docs (Swagger UI)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/docs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"docs"
+							]
+						},
+						"description": "Abre la documentación interactiva de Swagger UI en el navegador"
+					},
+					"response": []
+				},
+				{
+					"name": "ReDoc Documentation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/redoc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"redoc"
+							]
+						},
+						"description": "Abre la documentación alternativa usando ReDoc"
+					},
+					"response": []
+				},
+				{
+					"name": "OpenAPI Schema (JSON)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/openapi.json",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"openapi.json"
+							]
+						},
+						"description": "Obtiene el esquema OpenAPI en formato JSON"
+					},
+					"response": []
+				}
+			],
+			"description": "Enlaces a la documentación automática generada por FastAPI"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "document_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

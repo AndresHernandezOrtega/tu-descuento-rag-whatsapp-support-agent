@@ -1,0 +1,10 @@
+# Ignorar el archivo de variables de entorno
+.env
+
+# Ignorar las carpetas de datos de Docker
+n8n_data/
+pg_data/
+chroma_data/
+
+# Ignorar archivos de sistema
+.DS_Store

@@ -1,0 +1,27 @@
+ingestion-api/
+├── app/ # Directorio principal del código de la aplicación
+│ ├── init.py
+│ ├── api/ # Contiene los endpoints de la API
+│ │ ├── init.py
+│ │ └── v1/ # Versionamiento de la API (buena práctica)
+│ │ ├── init.py
+│ │ └── endpoints/
+│ │ ├── init.py
+│ │ └── ingestion.py # Lógica para los endpoints /ingest, /delete, etc.
+│ │
+│ ├── core/ # Configuración central de la aplicación
+│ │ ├── init.py
+│ │ └── config.py # Carga de variables de entorno y configuraciones
+│ │
+│ ├── services/ # La lógica de negocio (el "cerebro")
+│ │ ├── init.py
+│ │ └── rag_service.py # La función que hace Cargar->Dividir->Vectorizar->Almacenar
+│ │
+│ ├── schemas/ # Modelos de datos Pydantic (para validación de requests/responses)
+│ │ ├── init.py
+│ │ └── document.py # Esquema para un documento a ingestar
+│ │
+│ └── main.py # Punto de entrada de la aplicación, une todo
+│
+├── Dockerfile # Receta para construir la imagen Docker
+└── requirements.txt # Dependencias de Python
