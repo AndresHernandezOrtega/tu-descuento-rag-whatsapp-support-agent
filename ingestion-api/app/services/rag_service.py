@@ -204,3 +204,44 @@ class RAGService:
                 documents_dict[doc_id].chunks_count += 1
         
         return list(documents_dict.values())
+    
+    async def query_documents(self, query_text: str, n_results: int = 5, filter_metadata: dict = None):
+        """
+        Realiza una búsqueda semántica en la base de datos vectorial
+        """
+        try:
+            collection = self.chroma_client.get_collection(
+                name=self.settings.chroma_collection_name
+            )
+        except Exception:
+            # Si la colección no existe, retornar lista vacía
+            return []
+        
+        # Obtener el modelo de embeddings
+        embedding_model = self._get_embedding_model()
+        
+        # Generar embedding de la query
+        query_embedding = embedding_model.encode([query_text]).tolist()
+        
+        # Realizar la búsqueda
+        where_filter = filter_metadata if filter_metadata else None
+        
+        results = collection.query(
+            query_embeddings=query_embedding,
+            n_results=n_results,
+            where=where_filter,
+            include=["documents", "metadatas", "distances"]
+        )
+        
+        # Formatear los resultados
+        formatted_results = []
+        if results and results['ids'] and len(results['ids']) > 0:
+            for i in range(len(results['ids'][0])):
+                formatted_results.append({
+                    "id": results['ids'][0][i],
+                    "content": results['documents'][0][i],
+                    "score": results['distances'][0][i],
+                    "metadata": results['metadatas'][0][i]
+                })
+        
+        return formatted_results

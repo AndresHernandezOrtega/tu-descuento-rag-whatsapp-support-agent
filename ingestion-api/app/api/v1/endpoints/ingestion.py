@@ -4,7 +4,14 @@ Endpoints para la gestión de ingesta de documentos
 from fastapi import APIRouter, HTTPException, status
 from typing import List
 
-from app.schemas.document import DocumentCreate, DocumentResponse, DocumentDelete
+from app.schemas.document import (
+    DocumentCreate, 
+    DocumentResponse, 
+    DocumentDelete,
+    QueryRequest,
+    QueryResponse,
+    QueryResult
+)
 from app.services.rag_service import RAGService
 
 router = APIRouter()
@@ -53,4 +60,39 @@ async def list_documents():
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error al listar documentos: {str(e)}"
+        )
+
+
+@router.post("/query", response_model=QueryResponse)
+async def query_documents(query_request: QueryRequest):
+    """
+    Realiza una búsqueda semántica en la base de datos vectorial
+    """
+    try:
+        results = await rag_service.query_documents(
+            query_text=query_request.query,
+            n_results=query_request.n_results,
+            filter_metadata=query_request.filter_metadata
+        )
+        
+        # Convertir resultados a QueryResult objects
+        query_results = [
+            QueryResult(
+                id=r["id"],
+                content=r["content"],
+                score=r["score"],
+                metadata=r["metadata"]
+            )
+            for r in results
+        ]
+        
+        return QueryResponse(
+            query=query_request.query,
+            results=query_results,
+            total_results=len(query_results)
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error al realizar la búsqueda: {str(e)}"
         )
